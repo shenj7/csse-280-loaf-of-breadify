@@ -1,0 +1,30 @@
+body {
+    background: #424242;
+    display: grid;
+    grid-template-areas: "image sidebar"
+                         "image sidebar";
+    grid-template-columns: 4fr 1fr;
+    height: 100vh;
+}
+
+#featured-background {
+    grid-area: image;
+}
+
+#sidebar {
+    height: 100%;
+    grid-area: sidebar;
+    background-color: #1c1c1c;
+    display: grid;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
+    justify-items: center;
+}
+
+.sidebarButton {
+    width: 85%;
+    background-color: #696969;
+    height: 90%;
+    border-radius: 0.5rem;
+    border-width: 0;
+    margin: 2rem;
+}
