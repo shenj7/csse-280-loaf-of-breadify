@@ -1,14 +1,13 @@
+/*
+    General layout
+*/
 body {
     background: #424242;
     display: grid;
-    grid-template-areas: "image sidebar"
-                         "image sidebar";
-    grid-template-columns: 4fr 1fr;
+    grid-template-areas: "main sidebar"
+                         "main sidebar";
+    grid-template-columns: 5fr 1fr;
     height: 100vh;
-}
-
-#featured-background {
-    grid-area: image;
 }
 
 #sidebar {
@@ -23,8 +22,44 @@ body {
 .sidebarButton {
     width: 85%;
     background-color: #696969;
-    height: 90%;
+    height: 80%;
     border-radius: 0.5rem;
     border-width: 0;
-    margin: 2rem;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.sidebarButton > i {
+    font-size: 3rem;
+    color: white;
+    margin-bottom: 1rem;
+}
+
+.sidebarButton > p {
+    font-size: 0.75rem;
+    color: white;
+    margin: 0;
+}
+
+#sidebar > h1 {
+    text-align: center;
+    color: white;
+    margin-top: 1rem;
+    margin-bottom: 0;
+}
+
+#sidebar > h1 > i {
+    font-size: 1.5rem;
+}
+
+#featured-background {
+    grid-area: main;
+}
+
+/*
+    Specific to index.html
+*/
+#featured-background > img{
+    width: 100%;
+    max-height: 100vh;
 }
