@@ -1,5 +1,5 @@
 /*
-    General layout
+    General layout - global styles
 */
 body {
     background: #424242;
@@ -54,12 +54,4 @@ body {
 
 #featured-background {
     grid-area: main;
-}
-
-/*
-    Specific to index.html
-*/
-#featured-background > img{
-    width: 100%;
-    max-height: 100vh;
 }
