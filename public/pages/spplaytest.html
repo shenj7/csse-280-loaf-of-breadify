@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons">
+    <link rel="stylesheet" href="../styles/bootstrap-material-design.min.css">
+    <link rel="stylesheet" href="../styles/index.css">
+    <link rel="stylesheet" href="../styles/upload.css">
+
+
+
+    <title>Loaf Of Breadify</title>
+    <link rel="shortcut icon" type="image/jpg" href="../loafofbreadify.png" />
+</head>
+
+<body>
+    <!-- Content ----------------------------------------------------->
+
+    <div id="upload-box">
+        <button id="togglePlay">Toggle Play</button>
+    </div>
+
+    <script>
+        window.onSpotifyWebPlaybackSDKReady = () => {
+            const token = 'BQDnNsH_cP3KSShv7pi4C_R1uo7KU2daNbv1Iqfj0veaqQ-yDIJTcBC2ZbwUqKlxDQHFhaXkn2gT4IceGVH1Tj1HqqL7n2iYzIkDx7sU08MxD_znmFZXM5EnPUAeu1S2KKMWyTSPXYXvecIZNuUJ05AJJu3ZWvjMM6_ezh2VJECZCGjt0dinJ2w';
+            const player = new Spotify.Player({
+                name: 'Web Playback SDK Quick Start Player',
+                getOAuthToken: cb => { cb(token); },
+                volume: 0.5
+            });
+            player.addListener('ready', ({ device_id }) => {
+                console.log('Ready with Device ID', device_id);
+            });
+
+            // Not Ready
+            player.addListener('not_ready', ({ device_id }) => {
+                console.log('Device ID has gone offline', device_id);
+            });
+
+            player.connect();
+
+            document.getElementById('togglePlay').onclick = function () {
+                player.togglePlay();
+            };
+        }
+        // Ready
+    </script>
+
+    <div id="sidebar">
+        <h1>Lo<i class="fas fa-bread-slice"></i>f of <br />Bre<i class="fas fa-bread-slice"></i>dify</h1>
+        <button id="spotifyButton" class="sidebarButton">
+            <i class="fab fa-spotify"></i>
+            <p>Login to Spotify</p>
+        </button>
+        <button id="homeButton" class="sidebarButton">
+            <i class="fas fa-home"></i>
+            <p>Home</p>
+        </button>
+        <button id="settingsButton" class="sidebarButton">
+            <i class="fas fa-bars"></i>
+            <p>Settings</p>
+        </button>
+        <button id="uploadButton" class="sidebarButton">
+            <i class="fas fa-upload"></i>
+            <p>Upload Backgrounds</p>
+        </button>
+        <button id="fullscreenButton" class="sidebarButton">
+            <i class="fas fa-expand-arrows-alt"></i>
+            <p>Full Screen</p>
+        </button>
+
+    </div>
+    <!----------------------------------------------------------------->
+
+    <!-- Scripts ------------------------------------------------------>
+    <script src="../scripts/jquery.min.js"></script>
+    <script src="../scripts/popper.js"></script>
+    <script src="../scripts/bootstrap-material-design.js"></script>
+    <script>$("body").bootstrapMaterialDesign();</script>
+    <script src="../__/firebase/7.18.0/firebase-app.js"></script>
+    <script src="../__/firebase/7.18.0/firebase-analytics.js"></script>
+    <script src="../__/firebase/7.18.0/firebase-auth.js"></script>
+    <script src="../__/firebase/7.18.0/firebase-firestore.js"></script>
+    <script src="../__/firebase/init.js"></script>
+    <script src="https://kit.fontawesome.com/4ed22949d1.js" crossorigin="anonymous"></script>
+    <script src="https://sdk.scdn.co/spotify-player.js"></script>
+    <script src="../scripts/main.js"></script>
+    <!----------------------------------------------------------------->
+</body>
+
+</html>
