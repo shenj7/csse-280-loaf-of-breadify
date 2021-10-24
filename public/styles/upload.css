@@ -1,3 +1,51 @@
 #uploadBox {
     grid-area: main;
+    max-height: 100vh;
 }
+
+.crop {
+    width: 65vw;
+    height: 45vh;
+    overflow: hidden;
+}
+
+.crop img {
+    max-width: 100% !important;
+    max-height: 100% !important;
+}
+
+#addon {
+    background: darkgreen;
+    color: white;
+    position: fixed;
+    left: 10px;
+    bottom: 10px;
+    z-index: 999;
+}
+
+#addon:active {
+    transform: translateY(2px);
+    opacity: 0.8;
+}
+
+.card {
+    margin: 1.2rem;
+    height: 8rem;
+    color: white;
+    background-color: #696969;
+    border-color: black;
+}
+
+.loader {
+    border: 0.5rem solid black; /* Light grey */
+    border-top: 0.5rem solid darkgreen; /* Blue */
+    border-radius: 50%;
+    width: 3rem;
+    height: 3rem;
+    animation: spin 0.9s linear infinite;
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }

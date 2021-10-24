@@ -1,3 +1,5 @@
+rhit.mainPageController = null;
+
 var rhit = rhit || {};
 
 var spotify = spotify || {};
@@ -9,9 +11,6 @@ spotify.client_secret = ''; // Your secret
 spotify.redirect_uri = 'localhost:5000/pages/index.html'; // Your redirect uri
 
 /* end spotify api stuff */
-
-
-rhit.mainPageController = null;
 
 rhit.MainPageController = class {
 	constructor() {
@@ -39,7 +38,7 @@ rhit.MainPageController = class {
 
 		$("#homeButton").click((event) => {
 			console.log("home");
-			window.location.href = "../pages/index.html";
+			window.location.href = "../pages/home.html";
 		});
 
 		$("#settingsButton").click((event) => {

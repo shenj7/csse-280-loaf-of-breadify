@@ -7,7 +7,8 @@
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons">
 	<link rel="stylesheet" href="../styles/bootstrap-material-design.min.css">
 	<link rel="stylesheet" href="../styles/index.css">
-    <link rel="stylehseet" href="../styles/settings.css">
+    <link rel="stylesheet" href="../styles/settings.css">
+	<link rel="stylesheet" href="../styles/sidebar.css">
 	
 	<title>Loaf Of Breadify</title>
 	<link rel="shortcut icon" type="image/jpg" href="../loafofbreadify.png"/>
@@ -16,8 +17,35 @@
 <body>
 	<!-- Content ----------------------------------------------------->
 
-	<div id="settings">
-        <h1>Settings</h1>
+	<div id="settingsHead">
+		<div class="card main-card">
+			<div class="card-body">
+			  <h5 class="card-title">Settings</h5>
+			  <p class="card-text">Set your preferences here.</p>
+			</div>
+		</div>
+		<div class="card settings-card">
+			<div class="card-body">
+			  <h5 class="card-title">Username:</h5>
+			  <h6 class="mb-2">Loading...</h6>
+			</div>
+		</div>
+		<div class="card settings-card">
+			<div class="card-body">
+			  <h5 class="card-title">Theme:</h5>
+			  <button class="btn btn-outline-success" type="button" style="margin-right: 1.2rem;">Light</button>
+			  <button class="btn btn-outline-success" type="button">Dark</button>
+			</div>
+		</div>
+		<div class="card signout-card">
+			<div class="card-body">
+				<button class="btn btn-outline-success" type="button">Sign Out</button>
+			</div>
+		</div>
+	</div>
+
+	<div id="settingsList">
+
 	</div>
 
 	<div id="sidebar">

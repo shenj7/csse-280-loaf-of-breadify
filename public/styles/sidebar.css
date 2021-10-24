@@ -1,0 +1,43 @@
+#sidebar {
+    height: 100%;
+    grid-area: sidebar;
+    background-color: #1c1c1c;
+    display: grid;
+    grid-template-rows: 0.5fr 1fr 1fr 1fr 1fr 1fr;
+    justify-items: center;
+    box-shadow: -5px 0px 2px #202020;
+}
+
+.sidebarButton {
+    width: 85%;
+    background-color: #696969;
+    height: 80%;
+    border-radius: 0.5rem;
+    border-width: 0;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.sidebarButton > i {
+    font-size: 3rem;
+    color: white;
+    margin-bottom: 1rem;
+}
+
+.sidebarButton > p {
+    font-size: 0.75rem;
+    color: white;
+    margin: 0;
+}
+
+#sidebar > h1 {
+    text-align: center;
+    color: white;
+    font-size: 1.4rem;
+    margin-top: 1rem;
+    margin-bottom: 0;
+}
+
+#sidebar > h1 > i {
+    font-size: 1rem;
+}

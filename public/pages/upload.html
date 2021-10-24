@@ -7,7 +7,8 @@
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons">
 	<link rel="stylesheet" href="../styles/bootstrap-material-design.min.css">
 	<link rel="stylesheet" href="../styles/index.css">
-    <link rel="stylehseet" href="../styles/upload.css">
+    <link rel="stylesheet" href="/styles/upload.css">
+	<link rel="stylesheet" href="../styles/sidebar.css">
 
 	<title>Loaf Of Breadify</title>
 	<link rel="shortcut icon" type="image/jpg" href="../loafofbreadify.png"/>
@@ -16,9 +17,21 @@
 <body>
 	<!-- Content ----------------------------------------------------->
 
-	<div id="upload-box">
-        <h1>Upload</h1>
-    </div>
+	<div class="card" style="width: 18rem;">
+		<div class="card-body">
+		  <h5 class="card-title">Your Backgrounds</h5>
+		  <p class="card-text">We'll keep any backgrounds you create here for safekeeping.</p>
+		</div>
+	  </div>
+	<div id="listPage" class="container page-container">
+		<div id="captionListContainer">
+			<div class="loader text-success" role="status">
+			</div>
+		</div>
+  	</div>
+	<button id="addon" type="button" data-toggle="modal" data-target="#addCaptionDialog" class="btn btn-info bmd-btn-fab">
+		<i class="material-icons">add</i>
+	</button>
 
 	<div id="sidebar">
 		<h1>Lo<i class="fas fa-bread-slice"></i>f of <br/>Bre<i class="fas fa-bread-slice"></i>dify</h1>
