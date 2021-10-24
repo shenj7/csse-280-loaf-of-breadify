@@ -1,5 +1,3 @@
-rhit.mainPageController = null;
-
 var rhit = rhit || {};
 
 var spotify = spotify || {};
@@ -11,6 +9,9 @@ spotify.client_secret = 'd3ea2e92a73a40cabf7698511fc9c9ee'; // Your secret
 spotify.redirect_uri = 'https://csse-280-loaf-of-breadify.web.app/pages/home.html'; // Your redirect uri
 
 /* end spotify api stuff */
+
+
+rhit.mainPageController = null;
 
 rhit.MainPageController = class {
 	constructor() {
@@ -30,7 +31,7 @@ rhit.MainPageController = class {
 
 		$("#homeButton").click((event) => {
 			console.log("home");
-			window.location.href = "../pages/home.html";
+			window.location.href = "../pages/index.html";
 		});
 
 		$("#settingsButton").click((event) => {
