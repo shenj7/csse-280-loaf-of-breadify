@@ -7,34 +7,37 @@
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons">
 	<link rel="stylesheet" href="../styles/bootstrap-material-design.min.css">
 	<link rel="stylesheet" href="../styles/index.css">
-    <link rel="stylesheet" href="/styles/upload.css">
+	<link rel="stylesheet" href="/styles/upload.css">
 	<link rel="stylesheet" href="../styles/sidebar.css">
 
 	<title>Loaf Of Breadify</title>
-	<link rel="shortcut icon" type="image/jpg" href="../loafofbreadify.png"/>
+	<link rel="shortcut icon" type="image/jpg" href="../loafofbreadify.png" />
 </head>
 
 <body>
 	<!-- Content ----------------------------------------------------->
-
+	<h1 class="card-title">Your Backgrounds&nbsp&nbsp&nbsp<i class="far fa-images"></i></h1>
 	<div class="card" style="width: 18rem;">
 		<div class="card-body">
-		  <h5 class="card-title">Your Backgrounds</h5>
-		  <p class="card-text">We'll keep any backgrounds you create here for safekeeping.</p>
+			<!-- populate this area with images -->
+			<img class="card-img" src="../images/shrek.jpg" alt="shrek">
+			<img class="card-img" src="../images/shrek.jpg" alt="shrek">
+			<img class="card-img" src="../images/shrek.jpg" alt="shrek">
 		</div>
-	  </div>
+	</div>
 	<div id="listPage" class="container page-container">
 		<div id="captionListContainer">
-			<div class="loader text-success" role="status">
-			</div>
+			<!-- <div class="loader text-success" role="status">
+			</div> -->
 		</div>
-  	</div>
-	<button id="addon" type="button" data-toggle="modal" data-target="#addCaptionDialog" class="btn btn-info bmd-btn-fab">
+	</div>
+	<!-- <button id="addon" type="button" data-toggle="modal" data-target="#addCaptionDialog"
+		class="btn btn-info bmd-btn-fab">
 		<i class="material-icons">add</i>
-	</button>
+	</button> -->
 
 	<div id="sidebar">
-		<h1>Lo<i class="fas fa-bread-slice"></i>f of <br/>Bre<i class="fas fa-bread-slice"></i>dify</h1>
+		<h1>Lo<i class="fas fa-bread-slice"></i>f of <br />Bre<i class="fas fa-bread-slice"></i>dify</h1>
 		<button id="spotifyButton" class="sidebarButton">
 			<i class="fab fa-spotify"></i>
 			<p>Login to Spotify</p>
@@ -71,6 +74,8 @@
 	<script src="../__/firebase/init.js"></script>
 	<script src="https://kit.fontawesome.com/4ed22949d1.js" crossorigin="anonymous"></script>
 	<script src="../scripts/main.js"></script>
+	<script src="../scripts/login.js"></script>
+
 	<!----------------------------------------------------------------->
 </body>
 

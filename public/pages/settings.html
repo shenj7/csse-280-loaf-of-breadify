@@ -18,34 +18,23 @@
 	<!-- Content ----------------------------------------------------->
 
 	<div id="settingsHead">
-		<div class="card main-card">
+		<h1 class="card-title">Settings&nbsp&nbsp&nbsp<i class="fas fa-cog"></i></h1>
+		<div id="userName" class="card settings-card">
 			<div class="card-body">
-			  <h5 class="card-title">Settings</h5>
-			  <p class="card-text">Set your preferences here.</p>
+				<div id="userInfo">
+					<h5 class="card-title">Username:</h5>
+					<button class="btn btn-outline-success" type="button">Sign Out</button>
+				</div>
 			</div>
 		</div>
-		<div class="card settings-card">
-			<div class="card-body">
-			  <h5 class="card-title">Username:</h5>
-			  <h6 class="mb-2">Loading...</h6>
-			</div>
-		</div>
-		<div class="card settings-card">
+		<div id="theme" class="card settings-card">
 			<div class="card-body">
 			  <h5 class="card-title">Theme:</h5>
 			  <button class="btn btn-outline-success" type="button" style="margin-right: 1.2rem;">Light</button>
 			  <button class="btn btn-outline-success" type="button">Dark</button>
+			  <!-- could use a slider -->
 			</div>
 		</div>
-		<div class="card signout-card">
-			<div class="card-body">
-				<button class="btn btn-outline-success" type="button">Sign Out</button>
-			</div>
-		</div>
-	</div>
-
-	<div id="settingsList">
-
 	</div>
 
 	<div id="sidebar">
@@ -86,6 +75,7 @@
 	<script src="../__/firebase/init.js"></script>
 	<script src="https://kit.fontawesome.com/4ed22949d1.js" crossorigin="anonymous"></script>
 	<script src="../scripts/main.js"></script>
+	<script src="../scripts/login.js"></script>
 	<!----------------------------------------------------------------->
 </body>
 

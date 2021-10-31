@@ -22,3 +22,23 @@
     width: 8.5rem;
     height: 5rem;
 }
+
+h1 {
+    color: white;
+    margin: 2rem;
+}
+
+#userInfo {
+    display: grid;
+    grid-template-areas: "text text"
+                          "text button";
+    grid-template-columns: 4fr 1fr;
+}
+
+.card-body > button {
+    grid-area: "button";
+}
+
+#userInfo {
+    grid-area: "text";
+}

@@ -29,11 +29,25 @@
 }
 
 .card {
-    margin: 1.2rem;
+    margin: 2rem auto;
     height: 8rem;
     color: white;
     background-color: #696969;
     border-color: black;
+    height: 80vh;
+    width: 77.5vw !important;
+}
+
+.card-body {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-auto-flow: row;
+}
+
+.card-img {
+    width: 20vw;
+    height: 25vh;
+    margin: 1rem;
 }
 
 .loader {
@@ -49,3 +63,8 @@
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
   }
+
+  h1 {
+    color: white;
+    margin: 2rem;
+}
