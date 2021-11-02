@@ -1,6 +1,4 @@
 const $ = require("jquery");
-const express = require('express'); // used for spotify auth
-const app = express();
 
 var rhit = rhit || {};
 
