@@ -1,3 +1,7 @@
+const $ = require("jquery");
+const express = require('express'); // used for spotify auth
+const app = express();
+
 var rhit = rhit || {};
 
 var spotify = spotify || {};
@@ -20,29 +24,7 @@ rhit.MainPageController = class {
 
 	initializeButtons() {
 		$("#spotifyButton").click((event) => {
-			console.log("spotify");
-			// var scopes = 'user-read-private user-read-email';
-			// window.location.replace('https://accounts.spotify.com/authorize' +
-			// '?response_type=code' +
-			// '&client_id=' + spotify.client_id +
-			// (scopes ? '&scope=' + encodeURIComponent(scopes) : '') +
-			// '&redirect_uri=' + encodeURIComponent(spotify?spotify.redirect_uri:""));
-			var app = express();
-
-			app.get('/login', function (req, res) {
-
-				var state = generateRandomString(16);
-				var scope = 'user-read-private user-read-email';
-
-				res.redirect('https://accounts.spotify.com/authorize?' +
-					querystring.stringify({
-						response_type: 'code',
-						client_id: spotify.client_id,
-						scope: scope,
-						redirect_uri: spotify.redirect_uri,
-						state: state
-					}));
-			});
+			window.location.href="/login";
 		});
 
 		$("#homeButton").click((event) => {
