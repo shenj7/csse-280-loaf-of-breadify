@@ -14,7 +14,7 @@ const functions = require("firebase-functions");
  var cors = require('cors');
  var querystring = require('querystring');
  var cookieParser = require('cookie-parser');
- 
+
  var client_id = '0e95f084d6ea4406b2ac1dae208e4a6a'; // Your client id
  var client_secret = 'd3ea2e92a73a40cabf7698511fc9c9ee'; // Your secret
 //  var redirect_uri = 'https://csse-280-loaf-of-breadify.web.app/pages/home.html'; // Your redirect uri
@@ -50,7 +50,7 @@ const functions = require("firebase-functions");
    res.cookie(stateKey, state);
  
    // your application requests authorization
-   var scope = 'user-read-private user-read-email';
+   var scope = 'user-read-private user-read-email user-read-currently-playing';
    res.redirect('https://accounts.spotify.com/authorize?' +
      querystring.stringify({
        response_type: 'code',
@@ -146,5 +146,11 @@ const functions = require("firebase-functions");
      }
    });
  });
+
+//  app.get("/song", (req, res) => {
+   
+//  }).then(() => {
+   
+//  }); 
  
  exports.api = functions.https.onRequest(app);
