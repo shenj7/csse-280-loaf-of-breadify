@@ -21,6 +21,11 @@
 		<img src="/images/shrek-highquality.jpg" />
 	</div>
 
+	<div id="fsstuff">
+        <canvas id="output" height="500" width="500"></canvas>
+        <img src="https://www.iamag.co/wp-content/uploads/2019/04/Tenki-no-Ko-Weathering-With-You-5.jpg">
+    </div>
+
 	<div id="sidebar">
 		<h1>Lo<i class="fas fa-bread-slice"></i>f of Bre<i class="fas fa-bread-slice"></i>dify</h1>
 		<button id="spotifyButton" class="btn btn-raised sidebarButton">
@@ -43,10 +48,10 @@
 			<i class="fas fa-expand-arrows-alt"></i>
 			<p>Full Screen</p>
 		</button>
-
+		
 	</div>
 	<!----------------------------------------------------------------->
-
+	
 	<!-- Scripts ------------------------------------------------------>
 	<script src="/scripts/jquery.min.js"></script>
 	<script src="/scripts/popper.js"></script>
@@ -59,7 +64,63 @@
 	<script src="/__/firebase/init.js?useEmulator=true"></script>
 	<script src="https://kit.fontawesome.com/4ed22949d1.js" crossorigin="anonymous"></script>
 	<script src="/scripts/spotify-web-api.js"></script>
+	<script src="/scripts/wave.js"></script>
 	<script src="/scripts/main.js"></script>
+	<script>
+        document.querySelector("#fullscreenButton").onclick = (() => {
+            let elem = document.querySelector("#fsstuff");
+
+            if (!document.fullscreenElement) {
+                elem.requestFullscreen().catch(err => {
+                    alert(`Error attempting to enable full-screen mode: ${err.message} (${err.name})`);
+                });
+            } else {
+                document.exitFullscreen();
+            }
+        }
+        )
+        let wave = new Wave();
+        navigator.mediaDevices.getUserMedia({
+            audio: true
+        })
+            .then(function (mediaStream) {
+                wave.fromStream(mediaStream, "output", {
+                    type: "dualbars",
+                    // colors: ["red", "white", "blue"]
+                    colors: ["gray", "gray", "gray"]
+                });
+            })
+            .catch(function (err) {
+                console.log(err.message)
+            });
+
+    </script>
+    <script>
+        window.onSpotifyWebPlaybackSDKReady = () => {
+            // const token = sessionStorage.getItem("token");
+            const token = 'BQDnxwF5vpcpBlsThU9VRZNuTIRYEy7TPaMwJB3X9IHB8iuTlxwYzchArP15I0jqaoFQlPZMhB3AReT6AbJz4zOgCVc2Cu4EyEgfSCVAMpSLBvtaVC9y4RGhhPI2n0PB3TCA_Z7s5W-tOwHxrSOgk3xIU2MBmGtpTwgBkHF3_NcjhfasPXWFx0A';
+            const player = new Spotify.Player({
+                name: 'Web Playback SDK Quick Start Player',
+                getOAuthToken: cb => { cb(token); },
+                volume: 0.5
+            });
+            player.addListener('ready', ({ device_id }) => {
+                console.log('Ready with Device ID', device_id);
+            });
+
+            // Not Ready
+            player.addListener('not_ready', ({ device_id }) => {
+                console.log('Device ID has gone offline', device_id);
+            });
+
+            player.connect();
+
+            document.getElementById('#fullscreenButton').onclick = function () {
+                player.togglePlay();
+            };
+        }
+        // Ready
+    </script>
 
 	<!----------------------------------------------------------------->
 </body>

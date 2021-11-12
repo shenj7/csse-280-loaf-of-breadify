@@ -40,7 +40,7 @@
 		<h1>Lo<i class="fas fa-bread-slice"></i>f of <br />Bre<i class="fas fa-bread-slice"></i>dify</h1>
 		<button id="spotifyButton" class="btn btn-raised sidebarButton">
 			<i class="fab fa-spotify"></i>
-			<p>Login to Spotify</p>
+			<p id="spotifyLogin">Login to Spotify</p>
 		</button>
 		<button id="homeButton" class="btn btn-raised sidebarButton">
 			<i class="fas fa-home"></i>
@@ -63,19 +63,74 @@
 	<!----------------------------------------------------------------->
 
 	<!-- Scripts ------------------------------------------------------>
-	<script src="../scripts/jquery.min.js"></script>
-	<script src="../scripts/popper.js"></script>
-	<script src="../scripts/bootstrap-material-design.js"></script>
+	<script src="/scripts/jquery.min.js"></script>
+	<script src="/scripts/popper.js"></script>
+	<script src="/scripts/bootstrap-material-design.js"></script>
 	<script>$("body").bootstrapMaterialDesign();</script>
-	<script src="../__/firebase/7.18.0/firebase-app.js"></script>
-	<script src="../__/firebase/7.18.0/firebase-analytics.js"></script>
-	<script src="../__/firebase/7.18.0/firebase-auth.js"></script>
-	<script src="../__/firebase/7.18.0/firebase-firestore.js"></script>
-	<script src="../__/firebase/init.js?useEmulator=true"></script>
+	<script src="/__/firebase/7.18.0/firebase-app.js"></script>
+	<script src="/__/firebase/7.18.0/firebase-analytics.js"></script>
+	<script src="/__/firebase/7.18.0/firebase-auth.js"></script>
+	<script src="/__/firebase/7.18.0/firebase-firestore.js"></script>
+	<script src="/__/firebase/init.js?useEmulator=true"></script>
 	<script src="https://kit.fontawesome.com/4ed22949d1.js" crossorigin="anonymous"></script>
 	<script src="/scripts/spotify-web-api.js"></script>
-	<script src="../scripts/main.js"></script>
-	<script src="../scripts/login.js"></script>
+	<script src="/scripts/main.js"></script>
+	<script src="/scripts/login.js"></script>
+	<script>
+        document.querySelector("#fullscreenButton").onclick = (() => {
+            let elem = document.querySelector("#fsstuff");
+
+            if (!document.fullscreenElement) {
+                elem.requestFullscreen().catch(err => {
+                    alert(`Error attempting to enable full-screen mode: ${err.message} (${err.name})`);
+                });
+            } else {
+                document.exitFullscreen();
+            }
+        }
+        )
+        let wave = new Wave();
+        navigator.mediaDevices.getUserMedia({
+            audio: true
+        })
+            .then(function (mediaStream) {
+                wave.fromStream(mediaStream, "output", {
+                    type: "dualbars",
+                    // colors: ["red", "white", "blue"]
+                    colors: ["gray", "gray", "gray"]
+                });
+            })
+            .catch(function (err) {
+                console.log(err.message)
+            });
+
+    </script>
+    <script>
+        window.onSpotifyWebPlaybackSDKReady = () => {
+            // const token = sessionStorage.getItem("token");
+            const token = 'BQDnxwF5vpcpBlsThU9VRZNuTIRYEy7TPaMwJB3X9IHB8iuTlxwYzchArP15I0jqaoFQlPZMhB3AReT6AbJz4zOgCVc2Cu4EyEgfSCVAMpSLBvtaVC9y4RGhhPI2n0PB3TCA_Z7s5W-tOwHxrSOgk3xIU2MBmGtpTwgBkHF3_NcjhfasPXWFx0A';
+            const player = new Spotify.Player({
+                name: 'Web Playback SDK Quick Start Player',
+                getOAuthToken: cb => { cb(token); },
+                volume: 0.5
+            });
+            player.addListener('ready', ({ device_id }) => {
+                console.log('Ready with Device ID', device_id);
+            });
+
+            // Not Ready
+            player.addListener('not_ready', ({ device_id }) => {
+                console.log('Device ID has gone offline', device_id);
+            });
+
+            player.connect();
+
+            document.getElementById('#fullscreenButton').onclick = function () {
+                player.togglePlay();
+            };
+        }
+        // Ready
+    </script>
 
 	<!----------------------------------------------------------------->
 </body>
