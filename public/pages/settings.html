@@ -22,7 +22,7 @@
 		<div id="userName" class="card settings-card">
 			<div class="card-body">
 				<div id="userInfo">
-					<h5 class="card-title">Username:</h5>
+					<h5 id="usernameSlot" class="card-title">Not Logged In</h5>
 					<button class="btn btn-outline-success" type="button">Sign Out</button>
 				</div>
 			</div>
@@ -39,23 +39,23 @@
 
 	<div id="sidebar">
 		<h1>Lo<i class="fas fa-bread-slice"></i>f of <br/>Bre<i class="fas fa-bread-slice"></i>dify</h1>
-		<button id="spotifyButton" class="sidebarButton">
+		<button id="spotifyButton" class="btn btn-raised sidebarButton">
 			<i class="fab fa-spotify"></i>
 			<p>Login to Spotify</p>
 		</button>
-		<button id="homeButton" class="sidebarButton">
+		<button id="homeButton" class="btn btn-raised sidebarButton">
 			<i class="fas fa-home"></i>
 			<p>Home</p>
 		</button>
-		<button id="settingsButton" class="sidebarButton">
+		<button id="settingsButton" class="btn btn-raised sidebarButton">
 			<i class="fas fa-bars"></i>
 			<p>Settings</p>
 		</button>
-		<button id="uploadButton" class="sidebarButton">
+		<button id="uploadButton" class="btn btn-raised sidebarButton">
 			<i class="fas fa-upload"></i>
 			<p>Upload Backgrounds</p>
 		</button>
-		<button id="fullscreenButton" class="sidebarButton">
+		<button id="fullscreenButton" class="btn btn-raised sidebarButton">
 			<i class="fas fa-expand-arrows-alt"></i>
 			<p>Full Screen</p>
 		</button>
@@ -72,10 +72,10 @@
 	<script src="../__/firebase/7.18.0/firebase-analytics.js"></script>
 	<script src="../__/firebase/7.18.0/firebase-auth.js"></script>
 	<script src="../__/firebase/7.18.0/firebase-firestore.js"></script>
-	<script src="../__/firebase/init.js"></script>
+	<script src="../__/firebase/init.js?useEmulator=true"></script>
 	<script src="https://kit.fontawesome.com/4ed22949d1.js" crossorigin="anonymous"></script>
+	<script src="/scripts/spotify-web-api.js"></script>
 	<script src="../scripts/main.js"></script>
-	<script src="../scripts/login.js"></script>
 	<!----------------------------------------------------------------->
 </body>
 
