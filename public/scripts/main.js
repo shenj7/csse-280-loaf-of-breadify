@@ -1,10 +1,9 @@
 var rhit = rhit || {};
 
 rhit.FB_COLLECTION_BG = "photos";
-rhit.FB_KEY_AUTH_TOKEN = "authToken";
 rhit.FB_KEY_IMAGEURL = "imageUrl";
 rhit.FB_KEY_AUTHOR = "author";
-rhit.FB_KEY_LAST_TOUCHED = "lastTouched";
+rhit.FB_KEY_LASTUSED = "lastused";
 rhit.fbBgManager = null;
 
 var spotify = spotify || {};
@@ -14,13 +13,18 @@ var spotifyApi = new SpotifyWebApi();
 /* spofity api stuff */
 
 spotify.client_id = '0e95f084d6ea4406b2ac1dae208e4a6a'; // Your client id
-// spotify.client_secret = 'd3ea2e92a73a40cabf7698511fc9c9ee'; // Your secret
-spotify.redirect_uri = 'https://csse-280-loaf-of-breadify.web.app/pages/home.html'; // Your redirect uri
+spotify.redirect_uri = 'https://csse-280-loaf.web.app'; // Your redirect uri
 
-apiurl = "http://localhost:5001/csse-280-loaf/us-central1/api/"
+apiurl = "https://us-central1-csse-280-loaf.cloudfunctions.net/api/"
 
 /* end spotify api stuff */
 
+function htmlToElement(html) {
+	var template = document.createElement('template');
+	html = html.trim();
+	template.innerHTML = html;
+	return template.content.firstChild;
+}
 
 rhit.mainPageController = null;
 
@@ -77,14 +81,11 @@ rhit.MainPageController = class {
 		if (this.displayName != null) {
 			//rhit.fbBgManager = new rhit.FbBgManager(this.displayName, this.accessToken);
 		}
+		console.log("Finished Main");
 	}
 
 	get user() {
 		return this.displayName;
-	}
-
-	tokenToDatabase() {
-		// upload token to firestore
 	}
 
 	initializeButtons() {
@@ -117,14 +118,37 @@ rhit.initializePage = () => {
 	const urlParams = new URLSearchParams(window.location.search);
 	if (document.querySelector("#listPage")) {
 		console.log("You are on the list page.");
-		try {
+		// try {
 		const uid = sessionStorage.getItem("displayName");
+		console.log("display name: " + uid);
 		const tok = sessionStorage.getItem("Token");
 
-		rhit.fbPicsManager = new rhit.FbPicsManager(uid, tok);
+		rhit.fbBgManager = new rhit.FbBgManager(uid, tok);
 		new rhit.ListPageController();
-		} catch {
-			console.log("No login on list page");
+ 		// } catch {
+		// 	console.log("No login on list page");
+		// 	alert("Not logged in - The App will not work until you sign in with Spotify");
+		// }
+	}
+	if (document.querySelector("#usernameSlot")) {
+		const uid = sessionStorage.getItem("displayName");
+		if (uid != undefined) {
+			document.querySelector("#usernameSlot").innerHTML = "Logged In: " + uid;
+			$("#signOutButton").click((event) => {
+				sessionStorage.removeItem("token");
+				sessionStorage.removeItem("displayName");
+				sessionStorage.removeItem("currSelected");
+				location.reload();
+			});
+		} else {
+			document.querySelector("#signOutButton").style.display = "none";	
+		}
+	}
+	if (document.querySelector("#addon")) {
+		const uid = sessionStorage.getItem("displayName");
+		if (uid == undefined) {
+			document.querySelector("#addon").style.display = "none";
+			document.querySelector("#delete").style.display = "none";
 		}
 	}
 };
@@ -133,13 +157,17 @@ rhit.ListPageController = class {
 	constructor() {
 		console.log("created ListPageController");
 
-		if (document.querySelector("listPage")) {
+/* 		if (document.querySelector("#listPage")) {
 			window.location.href = `/list.html?displayName=${rhit.fbBgManager.uid}`;
 		};
-
+ */
 		document.querySelector("#submitAddImage").addEventListener("click", (event) => {
 			const imageURL = document.querySelector("#inputImageURL").value;
 			rhit.fbBgManager.add(imageURL);
+		});
+
+		document.querySelector("#submitRemoveImage").addEventListener("click", (event) => {
+			rhit.fbBgManager.deleteLastUsed(0);
 		});
 
 		$("#addImageDialog").on("show.bs.modal", (event) => {
@@ -149,16 +177,12 @@ rhit.ListPageController = class {
 			// Post animation
 			document.querySelector("#inputImageURL").focus();
 		});
-
 		// Start Listening!
 		rhit.fbBgManager.beginListening(this.updateList.bind(this));
 	}
 
 	_createCard(bg) {
-		return htmlToElement(`      
-		<div class="pin">
-			<img class="cardImageURL" src="${bg.imageURL}">
-		</div>`);
+		return htmlToElement(`<img class="cardImageURL" src="${bg.imageURL}">`);
 	}
 
 	updateList() {
@@ -172,17 +196,17 @@ rhit.ListPageController = class {
 			const bg = rhit.fbBgManager.getBgAtIndex(i);
 			console.log(bg);
 			const newCard = this._createCard(bg);
-
-			// newCard.onclick = (params) => {
-			// 	window.location.href = `/pic.html?id=${pc.id}`;
-			// };
+			newCard.onclick = (params) => {
+				sessionStorage.setItem("currSelected", rhit.fbBgManager.getBgAtIndex(i).imageURL);
+				rhit.fbBgManager.setLastUsed(i);
+				alert("This image has been set as your image for Full Screen");
+			};
 			newList.appendChild(newCard);
 		}
-
 		const oldList = document.querySelector("#imageListContainer");
 		oldList.removeAttribute("id");
 		oldList.hidden = true;
-
+		console.log("oldlist parent: " + oldList.parentElement);
 		oldList.parentElement.appendChild(newList);
 	}
 
@@ -192,6 +216,7 @@ rhit.bg = class {
 	constructor(imageURL, author) {
 		this.imageURL = imageURL;
 		this.author = author;
+		this.lastUsed = firebase.firestore.Timestamp.now();
 	}
 }
 
@@ -201,13 +226,36 @@ rhit.FbBgManager = class {
 		this._token = token;
 		this._documentSnapshots = [];
 		this._ref = firebase.firestore().collection(rhit.FB_COLLECTION_BG);
+
+		this._currentLast;
 		this._unsubscribe = null;
+		console.log("uid in fbbgmanager: " + this._uid);
 	}
+
+	setLastUsed(i) {
+		console.log("setting last used on img "+ i);
+		console.log(this._documentSnapshots[i]);
+
+		firebase.firestore().collection(rhit.FB_COLLECTION_BG).doc(this._documentSnapshots[i].Ef.path.segments[6]).update({
+			[rhit.FB_KEY_LASTUSED]: firebase.firestore.Timestamp.now(),
+		})
+	}
+
+	deleteLastUsed(i) {
+		firebase.firestore().collection(rhit.FB_COLLECTION_BG).doc(this._documentSnapshots[i].Ef.path.segments[6]).delete();
+		window.location.reload();
+	}
+
 	add(imageURL) { 
+		if (this._uid == undefined) {
+			alert("Cannot add Image - You are not logged in");
+			return;
+		}
 		this._ref.add({
-			//[rhit.FB_KEY_AUTH_TOKEN]: rhit.fbBgManager.token,
+			//[rhit.FB_KEY_AUTH_TOKEN]: rhit.fc.token,
 			[rhit.FB_KEY_IMAGEURL]: imageURL,
-			[rhit.FB_KEY_AUTHOR]: rhit.fbBgManager.uid,
+			[rhit.FB_KEY_AUTHOR]: this._uid,
+			[rhit.FB_KEY_LASTUSED]: false
 			//[rhit.FB_KEY_LAST_TOUCHED]: firebase.firestore.Timestamp.now(),
 		})
 		.then(function (docRef) {
@@ -218,19 +266,23 @@ rhit.FbBgManager = class {
 		})
 	}
 	beginListening(changeListener) { 
-
-		let query = this._ref.orderBy(rhit.FB_KEY_LAST_TOUCHED, "desc").limit(50);
+		let query = this._ref.orderBy(rhit.FB_KEY_LASTUSED, "desc").limit(50);
 		if (this._uid) {
 			query = query.where(rhit.FB_KEY_AUTHOR, "==", this._uid);
 		}
-
+		this._currentLast = query[0];
 		this._unsubscribe = query.onSnapshot((querySnapshot) => {
-			this._documentSnapshots = querySnapshot.docs;
+			console.log("querySnapshot: " + querySnapshot.docs);
+			if (querySnapshot.docs != undefined) {
+				this._documentSnapshots = querySnapshot.docs;
+			}
 			// querySnapsnot.forEach((doc) => {
-			// 	console.log(doc.data());
-			// });
-			changeListener();
-		});
+				// 	console.log(doc.data());
+				// });
+				changeListener();
+			});
+		
+
 	}
 	stopListening() {
 		this._unsubscribe();
@@ -240,17 +292,23 @@ rhit.FbBgManager = class {
 	}
 	getBgAtIndex(index) {
 		const docSnapshot = this._documentSnapshots[index];
-		const background = new rhit.bg(
-			docSnapshot.get(rhit.FB_KEY_IMAGEURL),
-			docSnapshot.get(rhit.FB_KEY_AUTHOR)
-		);
-		return background;
+		try {
+			const background = new rhit.bg(
+				docSnapshot.get(rhit.FB_KEY_IMAGEURL),
+				docSnapshot.get(rhit.FB_KEY_AUTHOR)
+			);
+			return background;
+		} catch {
+			console.log("docSnapshot must be empty! Do any images apply to this user?");
+			const background = new rhit.bg("ImageURL default", "Wam Salsa");
+			return background;
+		}
 	}
 
 }
 
 rhit.main = function () {
-	hit.initializePage();
+	rhit.initializePage();
 	rhit.mainPageController = new rhit.MainPageController();
 	console.log("Ready");
 };

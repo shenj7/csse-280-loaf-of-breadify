@@ -2,85 +2,73 @@
 <html lang="en">
 
 <head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons">
-	<link rel="stylesheet" href="/styles/bootstrap-material-design.min.css">
-	<link rel="stylesheet" href="/styles/index.css">
-	<link rel="stylesheet" href="/styles/home.css">
-	<link rel="stylesheet" href="/styles/sidebar.css">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons">
+    <link rel="stylesheet" href="/styles/bootstrap-material-design.min.css">
+    <link rel="stylesheet" href="/styles/index.css">
+    <link rel="stylesheet" href="/styles/home.css">
+    <link rel="stylesheet" href="/styles/sidebar.css">
 
-	<title>Loaf Of Breadify</title>
-	<link rel="shortcut icon" type="image/jpg" href="/loafofbreadify.png"/>
+    <title>Loaf Of Breadify</title>
+    <link rel="shortcut icon" type="image/jpg" href="/loafofbreadify.png" />
 </head>
 
 <body>
-	<!-- Content ----------------------------------------------------->
+    <!-- Content ----------------------------------------------------->
 
-	<div id="featured-background">
-		<img src="/images/shrek-highquality.jpg" />
-	</div>
-
-	<div id="fsstuff">
-        <canvas id="output" height="500" width="500"></canvas>
-        <img src="https://www.iamag.co/wp-content/uploads/2019/04/Tenki-no-Ko-Weathering-With-You-5.jpg">
+    <div id="featured-background">
+        <img id="featuredImage" src="#" />
     </div>
 
-	<div id="sidebar">
-		<h1>Lo<i class="fas fa-bread-slice"></i>f of Bre<i class="fas fa-bread-slice"></i>dify</h1>
-		<button id="spotifyButton" class="btn btn-raised sidebarButton">
-			<i class="fab fa-spotify"></i>
-			<p>Login to Spotify</p>
-		</button>
-		<button id="homeButton" class="btn btn-raised sidebarButton">
-			<i class="fas fa-home"></i>
-			<p>Home</p>
-		</button>
-		<button id="settingsButton" class="btn btn-raised sidebarButton">
-			<i class="fas fa-bars"></i>
-			<p>Settings</p>
-		</button>
-		<button id="uploadButton" class="btn btn-raised sidebarButton">
-			<i class="fas fa-upload"></i>
-			<p>Upload Backgrounds</p>
-		</button>
-		<button id="fullscreenButton" class="btn btn-raised sidebarButton">
-			<i class="fas fa-expand-arrows-alt"></i>
-			<p>Full Screen</p>
-		</button>
-		
-	</div>
-	<!----------------------------------------------------------------->
-	
-	<!-- Scripts ------------------------------------------------------>
-	<script src="/scripts/jquery.min.js"></script>
-	<script src="/scripts/popper.js"></script>
-	<script src="/scripts/bootstrap-material-design.js"></script>
-	<script>$("body").bootstrapMaterialDesign();</script>
-	<script src="/__/firebase/7.18.0/firebase-app.js"></script>
-	<script src="/__/firebase/7.18.0/firebase-analytics.js"></script>
-	<script src="/__/firebase/7.18.0/firebase-auth.js"></script>
-	<script src="/__/firebase/7.18.0/firebase-firestore.js"></script>
-	<script src="/__/firebase/init.js?useEmulator=true"></script>
-	<script src="https://kit.fontawesome.com/4ed22949d1.js" crossorigin="anonymous"></script>
-	<script src="/scripts/spotify-web-api.js"></script>
-	<script src="https://sdk.scdn.co/spotify-player.js"></script>
-	<script src="/scripts/wave.js"></script>
-	<script src="/scripts/main.js"></script>
-	<script>
-        // document.querySelector("#fullscreenButton").onclick = (() => {
-		// 	console.log("made fullscreen");
-        //     let elem = document.querySelector("#fsstuff");
+    <div id="fsstuff">
+        <canvas id="output" height="500" width="500"></canvas>
+        <img id="fsimage" src="#" />
+    </div>
 
-        //     if (!document.fullscreenElement) {
-        //         elem.requestFullscreen().catch(err => {
-        //             alert(`Error attempting to enable full-screen mode: ${err.message} (${err.name})`);
-        //         });
-        //     } else {
-        //         document.exitFullscreen();
-        //     }
-        // }
-        // )
+    <div id="sidebar">
+        <h1>Lo<i class="fas fa-bread-slice"></i>f of Bre<i class="fas fa-bread-slice"></i>dify</h1>
+        <button id="spotifyButton" class="btn btn-raised sidebarButton">
+            <i class="fab fa-spotify"></i>
+            <p>Login to Spotify</p>
+        </button>
+        <button id="homeButton" class="btn btn-raised sidebarButton">
+            <i class="fas fa-home"></i>
+            <p>Home</p>
+        </button>
+        <button id="settingsButton" class="btn btn-raised sidebarButton">
+            <i class="fas fa-bars"></i>
+            <p>Settings</p>
+        </button>
+        <button id="uploadButton" class="btn btn-raised sidebarButton">
+            <i class="fas fa-upload"></i>
+            <p>Upload Backgrounds</p>
+        </button>
+        <button id="fullscreenButton" class="btn btn-raised sidebarButton">
+            <i class="fas fa-expand-arrows-alt"></i>
+            <p>Full Screen</p>
+        </button>
+
+    </div>
+    <!----------------------------------------------------------------->
+
+    <!-- Scripts ------------------------------------------------------>
+    <script src="/scripts/jquery.min.js"></script>
+    <script src="/scripts/popper.js"></script>
+    <script src="/scripts/bootstrap-material-design.js"></script>
+    <script>$("body").bootstrapMaterialDesign();</script>
+    <script src="/__/firebase/7.18.0/firebase-app.js"></script>
+    <script src="/__/firebase/7.18.0/firebase-analytics.js"></script>
+    <script src="/__/firebase/7.18.0/firebase-auth.js"></script>
+    <script src="/__/firebase/7.18.0/firebase-firestore.js"></script>
+    <script src="/__/firebase/init.js?useEmulator=true"></script>
+    <script src="https://kit.fontawesome.com/4ed22949d1.js" crossorigin="anonymous"></script>
+    <script src="/scripts/spotify-web-api.js"></script>
+    <script src="https://sdk.scdn.co/spotify-player.js"></script>
+    <script src="/scripts/wave.js"></script>
+    <script src="/scripts/main.js"></script>
+    <script src="/scripts/wave.js"></script>
+    <script>
         let wave = new Wave();
         navigator.mediaDevices.getUserMedia({
             audio: true
@@ -98,6 +86,9 @@
 
     </script>
     <script>
+        document.querySelector("#featuredImage").src = sessionStorage.getItem("currSelected")?sessionStorage.getItem("currSelected"):"https://cdn.pixabay.com/photo/2015/09/16/20/10/dough-943245_960_720.jpg";
+        document.querySelector("#fsimage").src = sessionStorage.getItem("currSelected")?sessionStorage.getItem("currSelected"):"https://cdn.pixabay.com/photo/2015/09/16/20/10/dough-943245_960_720.jpg";
+        
         window.onSpotifyWebPlaybackSDKReady = () => {
             const token = sessionStorage.getItem("token");
             const player = new Spotify.Player({
@@ -117,25 +108,29 @@
             player.connect();
 
             document.getElementById('fullscreenButton').onclick = function () {
-				console.log("toggle play");
+                console.log("toggle play");
                 player.resume();
-				console.log("made fullscreen");
-            let elem = document.querySelector("#fsstuff");
+                console.log("made fullscreen");
+                let elem = document.querySelector("#fsstuff");
 
-            if (!document.fullscreenElement) {
-                elem.requestFullscreen().catch(err => {
-                    alert(`Error attempting to enable full-screen mode: ${err.message} (${err.name})`);
-                });
-            } else {
-                document.exitFullscreen();
-            }
-        
+                let pic = document.querySelector("#fsimage");
+
+                pic.src = sessionStorage.getItem("currSelected")?sessionStorage.getItem("currSelected"):"https://cdn.pixabay.com/photo/2015/09/16/20/10/dough-943245_960_720.jpg";
+
+                if (!document.fullscreenElement) {
+                    elem.requestFullscreen().catch(err => {
+                        alert(`Error attempting to enable full-screen mode: ${err.message} (${err.name})`);
+                    });
+                } else {
+                    document.exitFullscreen();
+                }
+
             };
         }
         // Ready
     </script>
 
-	<!----------------------------------------------------------------->
+    <!----------------------------------------------------------------->
 </body>
 
 </html>

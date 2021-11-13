@@ -17,9 +17,7 @@ const functions = require("firebase-functions");
 
  var client_id = '0e95f084d6ea4406b2ac1dae208e4a6a'; // Your client id
  var client_secret = 'd3ea2e92a73a40cabf7698511fc9c9ee'; // Your secret
-//  var redirect_uri = 'https://csse-280-loaf-of-breadify.web.app/pages/home.html'; // Your redirect uri
-//  var redirect_uri = 'http://localhost:5000/pages/home.html'; // Your redirect uri
- var redirect_uri = 'http://localhost:5001/csse-280-loaf/us-central1/api/callback';
+ var redirect_uri = 'https://us-central1-csse-280-loaf.cloudfunctions.net/api/callback';
 
  
  /**
@@ -108,7 +106,7 @@ const functions = require("firebase-functions");
          });
  
          // we can also pass the token to the browser to make requests from there
-         res.redirect('http://localhost:5000/pages/home.html/?' +
+         res.redirect('https://csse-280-loaf.web.app/pages/home.html?' +
            querystring.stringify({
              access_token: access_token,
              refresh_token: refresh_token
