@@ -25,39 +25,6 @@ apiurl = "http://localhost:5001/csse-280-loaf/us-central1/api/"
 rhit.mainPageController = null;
 
 
-/**
- * Creates a Firebase account with the given user profile and returns a custom auth token allowing
- * signing-in this account.
- * Also saves the accessToken to the datastore at /spotifyAccessToken/$uid
- *
- * @returns {Promise<string>} The Firebase custom auth token in a promise.
- */
- async function createFirebaseAccount(spotifyID, displayName, email, accessToken) {
-	// The UID we'll assign to the user.
-	const uid = `spotify:${spotifyID}`;
-  
-	// Save the access token to the Firebase Realtime Database.
-	const databaseTask = admin.database().ref(`/spotifyAccessToken/${uid}`).set(accessToken);
-  
-	// Create or update the user account.
-	const userCreationTask = admin.auth().updateUser(uid, {
-	  displayName: displayName,
-	  email: email,
-	  emailVerified: true,
-	}).catch((error) => {
-	  // If user does not exists we create it.
-	  if (error.code === 'auth/user-not-found') {
-		return admin.auth().createUser({
-		  uid: uid,
-		  displayName: displayName,
-		  email: email,
-		  emailVerified: true,
-		});
-	  }
-	  throw error;
-	});
-}
-
 rhit.MainPageController = class {
 	constructor() {
 		console.log("made new main page controller");
@@ -108,7 +75,7 @@ rhit.MainPageController = class {
 			};
 		}
 		if (this.displayName != null) {
-			fbBgManager = new FbBgManager(this.displayName);
+			//rhit.fbBgManager = new rhit.FbBgManager(this.displayName, this.accessToken);
 		}
 	}
 
@@ -146,12 +113,86 @@ rhit.MainPageController = class {
 	}
 }
 
+rhit.initializePage = () => {
+	const urlParams = new URLSearchParams(window.location.search);
+	if (document.querySelector("#listPage")) {
+		console.log("You are on the list page.");
+		try {
+		const uid = sessionStorage.getItem("displayName");
+		const tok = sessionStorage.getItem("Token");
+
+		rhit.fbPicsManager = new rhit.FbPicsManager(uid, tok);
+		new rhit.ListPageController();
+		} catch {
+			console.log("No login on list page");
+		}
+	}
+};
+
+rhit.ListPageController = class {
+	constructor() {
+		console.log("created ListPageController");
+
+		if (document.querySelector("listPage")) {
+			window.location.href = `/list.html?displayName=${rhit.fbBgManager.uid}`;
+		};
+
+		document.querySelector("#submitAddImage").addEventListener("click", (event) => {
+			const imageURL = document.querySelector("#inputImageURL").value;
+			rhit.fbBgManager.add(imageURL);
+		});
+
+		$("#addImageDialog").on("show.bs.modal", (event) => {
+			document.querySelector("#inputImageURL").value = "";
+		});
+		$("#addImageDialog").on("shown.bs.modal", (event) => {
+			// Post animation
+			document.querySelector("#inputImageURL").focus();
+		});
+
+		// Start Listening!
+		rhit.fbBgManager.beginListening(this.updateList.bind(this));
+	}
+
+	_createCard(bg) {
+		return htmlToElement(`      
+		<div class="pin">
+			<img class="cardImageURL" src="${bg.imageURL}">
+		</div>`);
+	}
+
+	updateList() {
+		console.log("I need to update the list on the page!");
+		console.log(`Num image = ${rhit.fbBgManager.length}`);
+		console.log(`Example image = `, rhit.fbBgManager.getBgAtIndex(0));
+
+		const newList = htmlToElement('<div id="imageListContainer"></div>');
+
+		for (let i = 0; i < rhit.fbBgManager.length; i++) {
+			const bg = rhit.fbBgManager.getBgAtIndex(i);
+			console.log(bg);
+			const newCard = this._createCard(bg);
+
+			// newCard.onclick = (params) => {
+			// 	window.location.href = `/pic.html?id=${pc.id}`;
+			// };
+			newList.appendChild(newCard);
+		}
+
+		const oldList = document.querySelector("#imageListContainer");
+		oldList.removeAttribute("id");
+		oldList.hidden = true;
+
+		oldList.parentElement.appendChild(newList);
+	}
+
+}
+
 rhit.bg = class {
 	constructor(imageURL, author) {
 		this.imageURL = imageURL;
 		this.author = author;
 	}
-
 }
 
 rhit.FbBgManager = class {
@@ -164,10 +205,10 @@ rhit.FbBgManager = class {
 	}
 	add(imageURL) { 
 		this._ref.add({
-			[rhit.FB_KEY_AUTH_TOKEN]: rhit.fbBgManager.token,
+			//[rhit.FB_KEY_AUTH_TOKEN]: rhit.fbBgManager.token,
 			[rhit.FB_KEY_IMAGEURL]: imageURL,
 			[rhit.FB_KEY_AUTHOR]: rhit.fbBgManager.uid,
-			[rhit.FB_KEY_LAST_TOUCHED]: firebase.firestore.Timestamp.now(),
+			//[rhit.FB_KEY_LAST_TOUCHED]: firebase.firestore.Timestamp.now(),
 		})
 		.then(function (docRef) {
 			console.log("Document written with ID: ", docRef.id);
@@ -182,7 +223,6 @@ rhit.FbBgManager = class {
 		if (this._uid) {
 			query = query.where(rhit.FB_KEY_AUTHOR, "==", this._uid);
 		}
-
 
 		this._unsubscribe = query.onSnapshot((querySnapshot) => {
 			this._documentSnapshots = querySnapshot.docs;
@@ -209,13 +249,8 @@ rhit.FbBgManager = class {
 
 }
 
-rhit.BackgroundManager = class {
-	constructor() {
-
-	}
-}
-
 rhit.main = function () {
+	hit.initializePage();
 	rhit.mainPageController = new rhit.MainPageController();
 	console.log("Ready");
 };

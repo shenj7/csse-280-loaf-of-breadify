@@ -20,18 +20,18 @@
 	<div class="card" style="width: 18rem;">
 		<div class="card-body">
 			<!-- populate this area with images -->
+			<!-- <img class="card-img" src="../images/shrek.jpg" alt="shrek">
 			<img class="card-img" src="../images/shrek.jpg" alt="shrek">
-			<img class="card-img" src="../images/shrek.jpg" alt="shrek">
-			<img class="card-img" src="../images/shrek.jpg" alt="shrek">
+			<img class="card-img" src="../images/shrek.jpg" alt="shrek"> -->
 		</div>
 	</div>
 	<div id="listPage" class="container page-container">
-		<div id="captionListContainer">
+		<div id="imageListContainer">
 			<!-- <div class="loader text-success" role="status">
 			</div> -->
 		</div>
 	</div>
-	<!-- <button id="addon" type="button" data-toggle="modal" data-target="#addCaptionDialog"
+	<!-- <button id="addon" type="button" data-toggle="modal" data-target="#addImageDialog"
 		class="btn btn-info bmd-btn-fab">
 		<i class="material-icons">add</i>
 	</button> -->
@@ -60,6 +60,33 @@
 		</button>
 
 	</div>
+	<button id="addon" type="button" data-toggle="modal" data-target="#addImageDialog" class="btn btn-info bmd-btn-fab">
+		<i class="material-icons">add</i>
+	</button>
+	
+	<!-- Modal -->
+	<div class="modal fade" id="addImageDialog" tabindex="-1" role="dialog" aria-labelledby="Add image dialog" aria-hidden="true">
+	  <div class="modal-dialog modal-dialog-centered" role="document">
+		<div class="modal-content">
+		  <div class="modal-header">
+			<h5 class="modal-title">Add Image</h5>
+		  </div>
+		  <div class="modal-body">
+			<!--<form>-->
+			  <div class="form-group bmd-form-group">
+				<label for="inputImageURL">Image URL</label>
+				<input type="text" class="form-control" id="inputImageURL">
+				<span class="bmd-help">What URL is the image located</span>
+			  </div>
+			<!--</form>-->
+		  </div>
+		  <div class="modal-footer">
+			<button type="button" class="btn btn-secondary" data-dismiss="modal">CANCEL</button>
+			<button id="submitAddImage" type="button" class="btn btn-primary" data-dismiss="modal">CREATE</button>
+		  </div>
+		</div>
+	  </div>
+	</div>
 	<!----------------------------------------------------------------->
 
 	<!-- Scripts ------------------------------------------------------>
@@ -74,8 +101,10 @@
 	<script src="/__/firebase/init.js?useEmulator=true"></script>
 	<script src="https://kit.fontawesome.com/4ed22949d1.js" crossorigin="anonymous"></script>
 	<script src="/scripts/spotify-web-api.js"></script>
+	<script src="https://sdk.scdn.co/spotify-player.js"></script>
 	<script src="/scripts/main.js"></script>
 	<script src="/scripts/login.js"></script>
+	<script src="/scripts/wave.js"></script>
 	<script>
         document.querySelector("#fullscreenButton").onclick = (() => {
             let elem = document.querySelector("#fsstuff");
@@ -107,8 +136,7 @@
     </script>
     <script>
         window.onSpotifyWebPlaybackSDKReady = () => {
-            // const token = sessionStorage.getItem("token");
-            const token = 'BQDnxwF5vpcpBlsThU9VRZNuTIRYEy7TPaMwJB3X9IHB8iuTlxwYzchArP15I0jqaoFQlPZMhB3AReT6AbJz4zOgCVc2Cu4EyEgfSCVAMpSLBvtaVC9y4RGhhPI2n0PB3TCA_Z7s5W-tOwHxrSOgk3xIU2MBmGtpTwgBkHF3_NcjhfasPXWFx0A';
+            const token = sessionStorage.getItem("token");
             const player = new Spotify.Player({
                 name: 'Web Playback SDK Quick Start Player',
                 getOAuthToken: cb => { cb(token); },
@@ -125,8 +153,8 @@
 
             player.connect();
 
-            document.getElementById('#fullscreenButton').onclick = function () {
-                player.togglePlay();
+            document.getElementById('fullscreenButton').onclick = function () {
+                player.resume();
             };
         }
         // Ready
